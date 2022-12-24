@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     employeeId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      unique: true
     },
     name: DataTypes.STRING,
     password: DataTypes.STRING,
