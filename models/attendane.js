@@ -4,8 +4,8 @@ module.exports = (sequelize, DataTypes) => {
     clockIn: DataTypes.DATE,
     clockOut: DataTypes.DATE
   }, {});
-  Attendane.associate = function(models) {
-    // associations can be defined here
+  Attendane.associate = function (models) {
+    Attendane.belongsTo(models.User)
   };
   return Attendane;
 };
