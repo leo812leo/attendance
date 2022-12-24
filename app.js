@@ -3,6 +3,8 @@ const express = require('express')
 const app = express()
 const routes = require('./routes')
 const session = require('express-session')
+const bodyParser = require('body-parser')
+const methodOverride = require('method-override')
 
 
 app.use(routes)
