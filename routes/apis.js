@@ -9,8 +9,7 @@ const userController = require('../controllers/userController')
 const authenticated = require('../middleware/auth')
 
 /* users */
-router.post('/users/login', userController.login)
-router.post('/users', userController.register)
-router.get('/users/:id', authenticated, userController.getStaff)
+// router.post('/users/login', userController.login)
+// router.post('/users', userController.register)
 
 module.exports = router

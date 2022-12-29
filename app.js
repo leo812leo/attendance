@@ -1,7 +1,9 @@
 /* setting */
-const port = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000
 // dotenv.config()
-
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 /* necessary package */
 // express
 const express = require('express')
@@ -24,7 +26,6 @@ app.use(passport.initialize())
 app.use(cors())
 app.engine('.hbs', engine({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
-app.use(routes)
 app.use(methodOverride('_method'))
 
 // 設定 port
