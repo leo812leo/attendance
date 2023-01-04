@@ -9,38 +9,52 @@ const jwt = require('jsonwebtoken')
 const userController = {
   login: async (req, res) => {
     try {
-      const { email, password } = req.body
-      if (!email || !password) {
+      const { employeeId, password } = req.body
+      if (!employeeId || !password) {
         return res.json({
           status: 'error',
-          message: '信箱及密碼不可空白'
+          message: '員編及密碼不可空白'
         })
       }
-      const staff = await Staff.findOne({ where: { email } })
+      const staff = await User.findOne({ where: { employeeId } })
       // 檢查 user 是否存在
       if (!staff)
         return res
           .status(401)
-          .json({ status: 'error', message: '信箱不存在！' })
+          .json({ status: 'error', message: '員編不存在！' })
       // 密碼是否正確
       if (!bcrypt.compareSync(password, staff.password)) {
         return res.status(401).json({ status: 'error', message: '密碼錯誤' })
       }
       // 簽發 token
-      const payload = { id: user.id }
-      const token = jwt.sign(payload, process.env.JWT_SECRET)
+      const payload = { id: staff.id }
+      const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' })
       return res.json({
         status: 'success',
         message: '登入成功!',
         token,
-        staff: {
+        user: {
           id: staff.id,
           name: staff.name,
-          email: staff.email
+          employeeId: staff.employeeId
         }
       })
     } catch (err) {
       console.log(err)
     }
   },
+  getUser: async (req, res) => {
+    try {
+      const user = await User.findByPk(req.params.id, {})
+      if (!user) {
+        return res.json({ status: 'error', message: 'no such user found' })
+      } else {
+        return res.json(user)
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  },
 }
+
+module.exports = userController
