@@ -40,7 +40,7 @@ const userController = {
         }
       })
     } catch (err) {
-      console.log(err)
+      return res.status(401).json({ status: 'error', message: err })
     }
   },
   getUser: async (req, res) => {
@@ -54,6 +54,16 @@ const userController = {
     } catch (err) {
       console.log(err)
     }
+  },
+  getCurrentUser: (req, res) => {
+    const { id, employeeId, name, isAdmin } =
+      req.user
+    return res.json({
+      id,
+      employeeId,
+      name,
+      isAdmin,
+    })
   },
 }
 
