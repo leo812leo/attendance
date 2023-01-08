@@ -14,6 +14,5 @@ function getUser(req) {
 module.exports = {
   getUser,
   getRandom,
-  zeroPad,
-  toTWtime
+  zeroPad
 }

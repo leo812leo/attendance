@@ -1,5 +1,5 @@
 'use strict';
-const { getRandom, toTWtime } = require('../_helpers')
+const { getRandom } = require('../_helpers')
 const dayjs = require('dayjs');
 
 
@@ -16,7 +16,8 @@ module.exports = {
           clockIn: time.add(getRandom(5, 12), 'h').format('YYYY-MM-DDTHH:mm:ss'),
           clockOut: time.add(getRandom(12, 28), 'h').format('YYYY-MM-DDTHH:mm:ss'),
           createdAt: new Date(),
-          updatedAt: new Date()
+          updatedAt: new Date(),
+          abnormal: false,
         }
       }
       ),
