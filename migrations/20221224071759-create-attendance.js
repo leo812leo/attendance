@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       date: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       clockIn: {
         type: Sequelize.DATE
@@ -29,6 +29,10 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: false
+      },
+      workingHours: {
+        type: Sequelize.FLOAT,
+        defaultValue: 0.0
       },
     });
   },

@@ -9,11 +9,12 @@ module.exports = (sequelize, DataTypes) => {
   }
   Attendance.init(
     {
-      UserId: DataTypes.INTEGER,
-      date: DataTypes.DATE,
+      userId: DataTypes.INTEGER,
+      date: DataTypes.DATEONLY,
       clockIn: DataTypes.DATE,
       clockOut: DataTypes.DATE,
-      abnormal: DataTypes.BOOLEAN
+      abnormal: DataTypes.BOOLEAN,
+      workingHours: DataTypes.FLOAT,
     },
     {
       sequelize,
