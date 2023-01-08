@@ -14,7 +14,8 @@ module.exports = (sequelize, DataTypes) => {
       Ext: DataTypes.STRING,
       cellPhone: DataTypes.STRING,
       name: DataTypes.STRING,
-      isAdmin: DataTypes.BOOLEAN
+      isAdmin: DataTypes.BOOLEAN,
+      loginAttempts: DataTypes.INTEGER
     },
     {
       sequelize,

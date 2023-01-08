@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
   Attendance.init(
     {
       UserId: DataTypes.INTEGER,
+      date: DataTypes.DATE,
       clockIn: DataTypes.DATE,
       clockOut: DataTypes.DATE
     },

@@ -1,18 +1,19 @@
 'use strict';
-const { getRandom, randomDate } = require('../_helpers')
-const moment = require('moment')
-moment.suppressDeprecationWarnings = true;
+const { getRandom } = require('../_helpers')
+const dayjs = require('dayjs');
+const { TIME } = require('sequelize');
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert(
       'Attendances',
       Array.from({ length: 10 }).map((_, index) => {
-        const day = getRandom(1, 30)
+        const time = Date(`2022-${getRandom(11, 12)}-${getRandom(1, 30)}`)
         return {
           id: (index + 1) * 10 + 1,
           UserId: getRandom(1, 5) * 10 + 1,
-          clockIn: randomDate(day, 8, 2),
-          clockOut: randomDate(day, 17, 3),
+          date: time,
+          clockIn: (dayjs(time).add(getRandom(5, 12), 'h')).toDate(),
+          clockOut: (dayjs(time).add(getRandom(12, 28), 'h')).toDate(),
           createdAt: new Date(),
           updatedAt: new Date()
         }
