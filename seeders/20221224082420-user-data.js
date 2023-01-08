@@ -17,7 +17,8 @@ module.exports = {
         cellPhone: `09-${zeroPad(getRandom(0, 99999999), 8)}`,
         createdAt: new Date(2021, getRandom(1, 12), index + 21),
         updatedAt: new Date(),
-        isAdmin: index % 2 === 0
+        isAdmin: index % 2 === 0,
+        loginAttempts: 0
       })),
       {}
     )
