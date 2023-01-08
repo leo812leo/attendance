@@ -16,27 +16,27 @@ const userController = {
           message: '員編及密碼不可空白'
         })
       }
-      const staff = await User.findOne({ where: { employeeId } })
+      const user = await User.findOne({ where: { employeeId } })
       // 檢查 user 是否存在
-      if (!staff)
+      if (!user)
         return res
           .status(401)
           .json({ status: 'error', message: '員編不存在！' })
       // 密碼是否正確
-      if (!bcrypt.compareSync(password, staff.password)) {
+      if (!bcrypt.compareSync(password, user.password)) {
         return res.status(401).json({ status: 'error', message: '密碼錯誤' })
       }
       // 簽發 token
-      const payload = { id: staff.id }
+      const payload = { id: user.id }
       const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' })
       return res.json({
         status: 'success',
         message: '登入成功!',
         token,
         user: {
-          id: staff.id,
-          name: staff.name,
-          employeeId: staff.employeeId
+          id: user.id,
+          name: user.name,
+          employeeId: user.employeeId
         }
       })
     } catch (err) {
