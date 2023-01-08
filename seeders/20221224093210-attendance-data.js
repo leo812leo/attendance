@@ -12,9 +12,9 @@ module.exports = {
         return {
           id: (index + 1) * 10 + 1,
           UserId: getRandom(1, 5) * 10 + 1,
-          date: toTWtime(time),
-          clockIn: toTWtime(time.add(getRandom(5, 12), 'h')),
-          clockOut: toTWtime(time.add(getRandom(12, 28), 'h')),
+          date: time.format('YYYY-MM-DD'),
+          clockIn: time.add(getRandom(5, 12), 'h').format('YYYY-MM-DDTHH:mm:ss'),
+          clockOut: time.add(getRandom(12, 28), 'h').format('YYYY-MM-DDTHH:mm:ss'),
           createdAt: new Date(),
           updatedAt: new Date()
         }

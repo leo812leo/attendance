@@ -11,11 +11,6 @@ function getUser(req) {
   return req.user
 }
 
-const dayjs = require('dayjs');
-function toTWtime(day) {
-  return day.add(dayjs().utcOffset(), 'minute').toDate()
-}
-
 module.exports = {
   getUser,
   getRandom,
