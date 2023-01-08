@@ -65,6 +65,52 @@ const userController = {
       isAdmin,
     })
   },
+  register: async (req, res) => {
+    try {
+      // 資料不可為空白
+      const { name, employeeId, password, checkPassword } = req.body
+      if (!name || !employeeId || !password || !checkPassword) {
+        return res.json({
+          status: 'error',
+          message: '所有欄位皆不可空白！'
+        })
+      }
+      // 確認checkPassword、password相同
+      if (checkPassword !== password) {
+        return res.json({
+          status: 'error',
+          message: '密碼確認不符！'
+        })
+      }
+      // 確認employeeId無重複
+      const user = await User.findOne({ where: { employeeId } })
+      if (user) {
+        return res.json({
+          status: 'error',
+          message: 'employeeId 已重覆註冊！'
+        })
+      }
+      if (name.length > 50 || password.length > 20) {
+        return res.json({
+          status: 'error',
+          message: '字數超出上限！'
+        })
+      }
+      // user
+      await User.create({
+        name,
+        employeeId,
+        password: bcrypt.hashSync(
+          req.body.password,
+          bcrypt.genSaltSync(10),
+          null
+        )
+      })
+      return res.status(200).json({ status: 'success', message: '註冊成功!' })
+    } catch (err) {
+      console.log(err)
+    }
+  },
 }
 
 module.exports = userController
