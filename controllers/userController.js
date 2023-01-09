@@ -22,13 +22,27 @@ const userController = {
         return res
           .status(401)
           .json({ status: 'error', message: '員編不存在！' })
+      // 確認是否登入失敗達五次
+      if (user.loginAttempts >= 5)
+        return res.status(401).json({
+          status: 'error',
+          message: 'Account locked out due to 5 failed login attempts'
+        })
       // 密碼是否正確
       if (!bcrypt.compareSync(password, user.password)) {
+        user.update({
+          loginAttempts: user.loginAttempts + 1
+        })
         return res.status(401).json({ status: 'error', message: '密碼錯誤' })
       }
       // 簽發 token
       const payload = { id: user.id }
       const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' })
+
+      await user.update({
+        loginAttempts: 0
+      })
+
       return res.json({
         status: 'success',
         message: '登入成功!',
@@ -56,7 +70,7 @@ const userController = {
     }
   },
   getCurrentUser: (req, res) => {
-    const { id, employeeId, name, isAdmin } =
+    const { id, employeeId, name, isAdmin, password } =
       req.user
     return res.json({
       id,
