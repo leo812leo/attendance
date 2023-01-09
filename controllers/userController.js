@@ -37,7 +37,7 @@ const userController = {
       }
       // 簽發 token
       const payload = { id: user.id }
-      const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' })
+      const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' })
 
       await user.update({
         loginAttempts: 0
@@ -123,6 +123,55 @@ const userController = {
       return res.status(200).json({ status: 'success', message: '註冊成功!' })
     } catch (err) {
       console.log(err)
+    }
+  },
+  changePassword: async (req, res) => {
+    try {
+      // 資料不可為空白
+      console.log(req.user)
+      const { employeeId, currentPassword, newPassword, checkPassword } = req.body
+      if (!employeeId || !currentPassword || !newPassword || !checkPassword) {
+        return res.json({
+          status: 'error',
+          message: '所有欄位皆不可空白！'
+        })
+      }
+      // 確認checkPassword、password相同
+      if (checkPassword !== newPassword) {
+        return res.json({
+          status: 'error',
+          message: '密碼確認不符！'
+        })
+      }
+      if (req.user.employeeId !== employeeId) {
+        return res.json({
+          status: 'error',
+          message: '不能修改他人密碼！'
+        })
+      }
+
+      if (newPassword.length > 20) {
+        return res.json({
+          status: 'error',
+          message: '字數超出上限！'
+        })
+      }
+      // user
+      const user = await User.findOne({ where: { employeeId } })
+      if (!bcrypt.compareSync(currentPassword, user.password)) {
+        return res.status(401).json({ status: 'error', message: '密碼錯誤' })
+      }
+      await user.update({
+        password: bcrypt.hashSync(
+          newPassword,
+          bcrypt.genSaltSync(10),
+          null
+        )
+      })
+      return res.status(200).json({ status: 'success', message: '註冊成功!' })
+    } catch (err) {
+      console.log(err)
+      return res.json({ status: 'error', message: err })
     }
   },
 }

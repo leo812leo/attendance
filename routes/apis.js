@@ -13,6 +13,7 @@ const QRcode = require('../middleware/QRcode')
 /* users */
 router.post('/users/login', userController.login)
 router.get('/users/:id', authenticated, userController.getUser)
+router.post('/users/changePassword', authenticated, userController.changePassword)
 router.post('/users', userController.register)
 
 // router.post('/users', userController.register)
