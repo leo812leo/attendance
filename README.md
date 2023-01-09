@@ -1,7 +1,7 @@
 ## attendance-systems
 考勤打卡專案 | 前後端分離
 
-You can see on 
+You can see on[https://leo812leo.github.io/attendance_vue3/#/mainpage]
 ## Getting Started
 
 本專案已經設定 npm script, 因此可以直接透過 npm install 與 npm run 的方式來執行。
