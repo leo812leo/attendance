@@ -15,6 +15,8 @@ const passport = require('./config/passport')
 const bodyParser = require('body-parser')
 // methodOverride
 const methodOverride = require('method-override')
+// handlebars
+const { engine } = require('express-handlebars')
 
 /* app */
 const app = express()
@@ -23,6 +25,8 @@ app.use(bodyParser.json())
 app.use(passport.initialize())
 app.use(cors())
 app.use(methodOverride('_method'))
+app.engine('.hbs', engine({ defaultLayout: 'main', extname: '.hbs' }))
+app.set('view engine', 'hbs')
 
 // 設定 port
 app.listen(PORT, () => {

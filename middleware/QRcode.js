@@ -8,6 +8,7 @@ const QRcode = async (req, res, next) => {
     const userId = req.params.userid
     const user = await User.findOne({ where: { id: userId } })
     const { employeeId } = user
+    req.headers.QRcode = true
     req.headers.authorization = `Bearer ${req.query.token}`
     return next()
   } catch (err) {

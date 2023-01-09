@@ -31,22 +31,33 @@ const punchController = {
             { clockOut: toTWtime(currentTime), workingHours, abnormal: true },
             { where: { userId, date } }
           )
-          return res.json({
+          const response = {
             formatCurrentTime,
             status: 'success',
             message: 'clock out, working hours less than 8'
-          })
+          }
+          if (req.headers.QRcode) {
+            res.render('index', { response })
+          } else {
+            return res.json(response)
+          }
+
         }
         else { // if working hours more than 8
           await Punch.update(
             { colckOut: formatCurrentTime, workingHours, abnormal: false },
             { where: { userId, date } }
           )
-          return res.json({
+          const response = {
             formatCurrentTime,
             status: 'success',
             message: 'Punch out successfully'
-          })
+          }
+          if (req.headers.QRcode) {
+            res.render('index', { response })
+          } else {
+            return res.json(response)
+          }
         }
       }
       else {  // if no punch record today, then punch in
@@ -56,7 +67,12 @@ const punchController = {
           date,
           userId: userId,
         })
-        return res.json({ formatCurrentTime, status: 'success', message: 'clockIn in successfully' })
+        const response = { formatCurrentTime, status: 'success', message: 'clockIn in successfully' }
+        if (req.headers.QRcode) {
+          res.render('index', { response })
+        } else {
+          return res.json(response)
+        }
       }
     } catch (err) {
       return res.status(401).json({ status: 'error', message: err })
