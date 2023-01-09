@@ -59,7 +59,6 @@ const punchController = {
         return res.json({ formatCurrentTime, status: 'success', message: 'clockIn in successfully' })
       }
     } catch (err) {
-      console.log(err)
       return res.status(401).json({ status: 'error', message: err })
     }
   }

@@ -66,7 +66,7 @@ const userController = {
         return res.json(user)
       }
     } catch (err) {
-      console.log(err)
+      return res.json({ status: 'error', message: err })
     }
   },
   getCurrentUser: (req, res) => {
@@ -122,13 +122,12 @@ const userController = {
       })
       return res.status(200).json({ status: 'success', message: '註冊成功!' })
     } catch (err) {
-      console.log(err)
+      return res.json({ status: 'error', message: err })
     }
   },
   changePassword: async (req, res) => {
     try {
       // 資料不可為空白
-      console.log(req.user)
       const { employeeId, currentPassword, newPassword, checkPassword } = req.body
       if (!employeeId || !currentPassword || !newPassword || !checkPassword) {
         return res.json({
@@ -170,7 +169,6 @@ const userController = {
       })
       return res.status(200).json({ status: 'success', message: '註冊成功!' })
     } catch (err) {
-      console.log(err)
       return res.json({ status: 'error', message: err })
     }
   },

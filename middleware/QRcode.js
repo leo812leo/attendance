@@ -11,7 +11,6 @@ const QRcode = async (req, res, next) => {
     req.headers.authorization = `Bearer ${req.query.token}`
     return next()
   } catch (err) {
-    console.log("hi")
     return res.status(401).json({ status: 'error', message: err })
   }
 }
